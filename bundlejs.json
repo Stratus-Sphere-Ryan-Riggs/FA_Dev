@@ -1,0 +1,143 @@
+{
+  "bundles": [
+    {
+        "dest": "/Scripts_Deploy/KBS_MODULE.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/Libraries/KBS_MODULE.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_ClientNameLists_LIB.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/Libraries/ClientNameLists_LIB.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_ScriptScheduler_2.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/Libraries/ScriptScheduler_2.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/FA_UE_setInvoiceFields_v7.js",
+        "uglify": false,
+        "source": [
+            "Scripts1/_UserEventScripts/FA_UE_setInvoiceFields_v7.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/NS_UE_Set_Order_Number_vr5.js",
+        "uglify": false,
+        "source": [
+            "Scripts1/_UserEventScripts/NS_UE_Set_Order_Number_vr5.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_PurchaseOrder_CS.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/_ClientScripts/PurchaseOrder_CS.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_SalesOrder_CS.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/_ClientScripts/SalesOrder_CS.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_BlueReceiptsDonation_UE.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/_UserEventScripts/BlueReceiptsDonation_UE.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_ItemFulfillment_UE.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/_UserEventScripts/ItemFulfillment_UE.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_PurchaseOrder_UE.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/_UserEventScripts/PurchaseOrder_UE.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_SalesOrder_UE_v8.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/_UserEventScripts/SalesOrder_UE_v8.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_Vendor_UE.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/_UserEventScripts/Vendor_UE.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_VendorBill_UE.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/_UserEventScripts/VendorBill_UE.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_CancelSalesOrder_SL_v1.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/CancelSalesOrder/CancelSalesOrder_SL_v1.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_ClearIFQuantities_CS.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/ClearIFQuantities/ClearIFQuantities_CS.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_ClearIFQuantities_SL.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/ClearIFQuantities/ClearIFQuantities_SL.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_ApplyPromotions_LIB.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/Promotions/ApplyPromotions_LIB.js"
+        ]
+    },{
+        "dest": "/Scripts_Deploy/KBS_SO_Promotion_CS.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/Promotions/SO_Promotion_CS.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_SO_Promotion_UE.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/Promotions/SO_Promotion_UE.js"
+        ]
+    },
+    {
+        "dest": "/Scripts_Deploy/KBS_UpdatePromotions_SS.js",
+        "uglify": false,
+        "source": [
+            "Scripts2/UpdatePromotionRecords/UpdatePromotions_SS.js"
+        ]
+    }
+  ]
+}

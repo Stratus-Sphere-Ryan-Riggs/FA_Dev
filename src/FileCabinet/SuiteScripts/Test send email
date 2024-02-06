@@ -1,0 +1,21 @@
+nlapiLogExecution("audit","FLOStart",new Date().getTime());
+function sendEmailTest(){
+	
+	try{
+		nlapiLogExecution('debug', 'Sending email...');
+		var userId = nlapiGetUser();
+		nlapiLogExecution('debug', 'userId', userId);
+		var bodyEmail = 'Tessssssssssssssssssssssssssssst';
+		var records = new Object();
+		records['entity'] = userId;
+		nlapiSendEmail(userId, 'mpanizza@netsuite.com', 'PC Miller call', 'tessssssssssssssst', null, null, records);
+	
+		//var mail = nlapiSendEmail(userId, 'mpanizza@netsuite.com', 'Purhase Order Notification', 'Purchase order approved', null, null, 'transaction', null);
+		
+		//nlapiSendEmail(userId, 'mpanizza@netsuite.com', 'PC Miller call' , bodyEmail);
+		nlapiLogExecution('debug', 'Finish Sending email...');
+
+	}catch(e){
+		nlapiLogExecution('debug', 'Error sending email', e);
+	}
+}

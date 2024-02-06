@@ -1,0 +1,34 @@
+{
+  "paths": {
+    "underscore": "/SuiteScripts/af_scripts/underscore.js@1.8.3/underscore",
+    "underscore_contrib": "/SuiteScripts/af_scripts/underscore-contrib@0.3.0/underscore-contrib.0.3.0",
+    "underscore_string": "/SuiteScripts/af_scripts/underscore.string@3.3.4/underscore.string.3.3.4_SS1_custom",
+    "string_functions": "/SuiteScripts/af_scripts/libraries/string.functions",
+    "underscore_add_ins": "/SuiteScripts/af_scripts/libraries/underscore.addins",
+    "XDate": "/SuiteScripts/af_scripts/XDate@0.8/XDate.0.8",
+    "ns_utils": "/SuiteScripts/af_scripts/libraries/ns_utils"
+  },
+  "shim": {
+    "underscore": {
+      "exports": "underscore"
+    },
+    "underscore_contrib": {
+      "exports": "underscore_contrib"
+    },
+    "underscore_string": {
+      "exports": "underscore_string"
+    },
+    "string_functions": {
+      "exports": "string_functions"
+    },
+    "underscore_add_ins": {
+      "exports": "underscore_add_ins"
+    },
+    "XDate": {
+      "exports": "XDate"
+    },
+    "ns_utils": {
+      "exports": "ns_utils"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "gulp": {
+    "javascript": [
+      "XDate.js"
+    ]
+  }
+,	"jshint": "false"
+}

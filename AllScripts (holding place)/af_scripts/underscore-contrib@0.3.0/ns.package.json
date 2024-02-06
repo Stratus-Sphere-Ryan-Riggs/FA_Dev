@@ -1,0 +1,8 @@
+{
+  "gulp": {
+    "javascript": [
+      "underscore-contrib.js"
+    ]
+  }
+,	"jshint": "false"
+}

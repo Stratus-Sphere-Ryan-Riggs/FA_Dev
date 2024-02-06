@@ -1,0 +1,118 @@
+nlapiLogExecution("audit","FLOStart",new Date().getTime());
+/**
+ * Module Description
+ * This script will be used to populate the time sheets
+ * with the weighted average of the revenue allocated to the project
+ * 
+ * Version    Date            Author           Remarks
+ * 1.00       17-jun 2016     rfulling
+ *
+ */
+
+/**
+ * The recordType (internal id) corresponds to the "Applied To" record in your script deployment. 
+ * @appliedtorecord recordType
+ * 
+ * @param {String} type Sublist internal id
+ * @param {String} name Field internal id
+ * @param {Num ber} linenum Optional line item number, starts from 1
+ * @returns {Void}
+ */
+
+
+/**********************************************todo  change to use this and custbody_electronic_contract_url **custbody_legal_contract*/
+//Globals to be passed as script parameters
+
+function wfaCheckLegal() {
+
+    var itemLineCount = nlapiGetLineItemCount('item');
+    var expineCount = nlapiGetLineItemCount('expense');
+    var legalRequire = "F";
+    var itemexpAccount = '';
+    var expAccount = '';
+    var itemId = "";
+    //Items
+    for (var i = 1; i <= itemLineCount; i++) {
+        //get the item then lookup the expense account
+        itemId = nlapiGetLineItemValue('item', 'item', i);
+        //lookup the expense account on the item.
+        if (itemId) {
+            legalRequire = nlapiGetLineItemValue('item', 'custcol_fa_legal_approval_item', i);
+            if (legalRequire || !isEmpty(nlapiGetFieldValue('custbody_electronic_contract_url')) || !isEmpty(nlapiGetFieldValue('custbody_legal_contract'))) {
+                break;
+            }
+            /*
+            itemexpAccount = nlapiLookupField('item', itemId, 'expenseaccount');
+            legalRequire = nlapiLookupField('account', itemexpAccount, 'custrecord_fa_legal_approval_required');
+           */
+        }
+    }
+    //expenses
+     for (var j = 1; j <= expineCount; j++) {
+         expAccount = nlapiGetLineItemValue('expense', 'account',j);
+         if (expAccount) {
+             legalRequire = nlapiGetLineItemValue('expense', 'custcol_fa_legal_required_exp', i);
+             //legalRequire = nlapiLookupField('account', expAccount, 'custrecord_fa_legal_approval_required');
+             if (legalRequire || !isEmpty(nlapiGetFieldValue('custbody_electronic_contract_url')) || !isEmpty(nlapiGetFieldValue('custbody_legal_contract'))) {
+                 break;
+             }
+         }
+     }
+     return legalRequire;
+}
+/* below test if a contract is attached to any line in the purchase order
+ * this will indicate that the document has to go to the CFO for approval
+ * if this returns false than it can be approved
+ */
+
+function hasContractAttached() {
+    //Items
+
+    var cfoApproval = "F";
+    if (!isEmpty(nlapiGetFieldValue('custbody_electronic_contract_url')) || !isEmpty(nlapiGetFieldValue('custbody_legal_contract'))) {
+        cfoApproval="T";
+}
+
+
+    /*
+    var itemLineCount = nlapiGetLineItemCount('item');
+    var expineCount = nlapiGetLineItemCount('expense');
+    var cfoDoc = '';
+    for (var i = 1; i <= itemLineCount; i++) {
+        //get the item then lookup the expense account
+        itemId = nlapiGetLineItemValue('item', 'item', i);
+        //lookup the expense account on the item.
+        if (itemId) {
+             cfoDoc = nlapiGetLineItemValue('item', 'custcol_fa_po_contract_req', i);
+            if (!isEmpty(cfoDoc)) {
+                cfoApproval = "T";
+            }
+        }
+    }
+
+    for (var j = 1; j <= expineCount; j++) {
+        expAccount = nlapiGetLineItemValue('expense', 'account', j);
+        if (expAccount) {
+             cfoDoc = nlapiGetLineItemValue('expense', 'custcol_fa_po_contract_req', j);
+            //legalRequire = nlapiLookupField('account', expAccount, 'custrecord_fa_legal_approval_required');
+             if (!isEmpty(cfoDoc)) {
+                 cfoApproval = "T";
+
+             }
+        }
+    }
+    */
+    return cfoApproval;
+}
+
+/**
+ * Return true if value is null, empty string, or undefined
+ * @param stValue
+ * @returns {Boolean}
+ */
+function isEmpty(stValue) {
+    if ((stValue == '') || (stValue == null) || (stValue == undefined)) {
+        return true;
+    }
+    return false;
+}

@@ -1,0 +1,1 @@
+internalid	type	custbody_pp_paypal_txn_id	custbody_pp_paypal_reason_code	custbody_pp_paypal_mass_payment	custbody_pp_paypal_tran_status	
