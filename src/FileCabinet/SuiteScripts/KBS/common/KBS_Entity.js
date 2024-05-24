@@ -12,10 +12,12 @@ define(
     [],
     () => {
         const Fields = {};
+        Fields.Custom = {};
 
         const Sublists = {};
 
         const SublistFields = {};
+        SublistFields.Custom = {};
 
         return {
             Fields,

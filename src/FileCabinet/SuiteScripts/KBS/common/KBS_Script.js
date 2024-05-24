@@ -32,9 +32,8 @@ define(
                 return this.me.scriptId;
             }
 
-            get usage() {
-                // TODO - Execution Usage
-                return 0;
+            get remainingUsage() {
+                return this.me.getRemainingUsage();
             }
         }
 

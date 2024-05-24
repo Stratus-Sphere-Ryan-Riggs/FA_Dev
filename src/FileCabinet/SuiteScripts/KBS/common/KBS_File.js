@@ -18,8 +18,6 @@ define(
         const MODULE = `KBS.File`;
 
         class File {
-            me;
-
             constructor(fileObject) {
                 this.me = fileObject;
             }

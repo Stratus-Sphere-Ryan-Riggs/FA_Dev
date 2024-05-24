@@ -32,6 +32,15 @@ define(
                 return this.me.type;
             }
 
+            findLine(options) {
+                let { fieldId, sublistId, value } = options;
+                return this.me.findSublistLineWithValue({
+                    fieldId,
+                    sublistId,
+                    value
+                });
+            }
+
             getLineCount(options) {
                 let { sublistId } = options;
                 return this.me.getLineCount({ sublistId });
@@ -84,28 +93,30 @@ define(
 
                     let lineCount = this.me.getLineCount({ sublistId });
                     for (let line = 0; line < lineCount; line++) {
-                        if (this.record.isDynamic == true) {
-                            this.record.selectLine({ sublistId, line });
+                        if (this.me.isDynamic == true) {
+                            this.me.selectLine({ sublistId, line });
                         }
                         
+                        let lineObject = { line };
                         fields.forEach(fieldId => {
                             let params = { fieldId, sublistId, text };
-                            if (this.record.isDynamic === false) {
+                            if (this.me.isDynamic === false) {
                                 params.line = line;
                             }
 
-                            output[sublistId].push({
+                            lineObject[fieldId] = text === this.getValue(params);
+                            /* output[sublistId].push({
                                 line,
                                 fieldId,
                                 value: text === this.getValue(params)
-                            });
+                            }); */
                         });
+                        output[sublistId].push(lineObject);
                     }
                 }
                 else {
                     fields.forEach(fieldId => {
                         output[fieldId] = this.getValue({ fieldId })
-    
                     });
                 }
 
@@ -118,7 +129,7 @@ define(
                 const TITLE = `${MODULE}.Save`;
                 log.debug({ title: TITLE, details: JSON.stringify(options) });
 
-                return this.record.save(options);
+                return this.me.save(options);
             }
         }
 

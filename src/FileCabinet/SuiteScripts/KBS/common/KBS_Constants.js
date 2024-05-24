@@ -14,7 +14,28 @@ define(
         './KBS_Transaction.js'
     ],
     (
-        kbs_entity,
-        kbs_transaction
-    ) => {}
+        KBS_Entity,
+        KBS_Transaction
+    ) => {
+        const ADVANCED_PDF_TEMPLATES = {};
+        const CUSTOM_RECORDS = {};
+        const DEPLOYMENTS = {};
+        const FORMS = {};
+        const LISTS = {};
+        const SCRIPT_PARAMETERS = {};
+        const SCRIPTS = {};
+
+        return {
+            AdvancedPDFTemplates: ADVANCED_PDF_TEMPLATES,
+            CustomRecords: CUSTOM_RECORDS,
+            Deployments: DEPLOYMENTS,
+            Entity: KBS_Entity,
+            Forms: FORMS,
+            Lists: LISTS,
+            ScriptParameters: SCRIPT_PARAMETERS,
+            Scripts: SCRIPTS,
+            Transaction: KBS_Transaction,
+
+        };
+    }
 );

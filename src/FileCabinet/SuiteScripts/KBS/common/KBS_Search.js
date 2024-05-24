@@ -15,7 +15,7 @@ define(
     ],
     (
         search,
-        kbs_string
+        KBS_String
     ) => {
         const MODULE = 'KBS.Search';
 
@@ -70,7 +70,61 @@ define(
                 }
             }
 
-            getAll() {
+            getCSV() {
+                const TITLE = `${MODULE}.GetCSV`;
+                let output = [];
+                let columns = this.me.columns;
+
+                let csvRow = [];
+                columns.forEach(col => {
+                    let label = KBS_String.normalize(col.label || col.name);
+                    csvRow.push(label);
+                });
+                log.debug({ title: `${TITLE} headerRow`, details: JSON.stringify(csvRow) });
+                output.push(csvRow.join(','));
+
+                this.getRaw().forEach(row => {
+                    csvRow = [];
+                    columns.forEach(col => {
+                        csvRow.push(row.getValue(col));
+                    });
+                    log.debug({ title: `${TITLE} headerRow`, details: JSON.stringify(csvRow) });
+                    output.push(csvRow.join(','));
+                });
+
+                log.debug({ title: TITLE, details: `output length = ${output.length}` });
+                return output;
+            }
+
+            getIds() {
+                const TITLE = `${MODULE}.GetIds`;
+                let output = this.getRaw().map(row => row.id);
+
+                log.debug({ title: TITLE, details: `output length = ${output.length}` });
+                return output;
+            }
+
+            getJSON() {
+                const TITLE = `${MODULE}.GetJSON`;
+                let output = [];
+                let columns = this.me.columns;
+
+                this.getRaw().forEach(row => {
+                    let jsonRow = {};
+                    columns.forEach(col => {
+                        let label = KBS_String.normalize(col.label || col.name);
+                        jsonRow[label] = row.getValue(col);
+                    });
+
+                    log.debug({ title: `${TITLE} jsonRow`, details: JSON.stringify(jsonRow) });
+                    output.push(jsonRow);
+                });
+
+                log.debug({ title: `${TITLE} output`, details: JSON.stringify(output) });
+                return output;
+            }
+
+            getRaw() {
                 const TITLE = `${MODULE}.GetAll`;
                 let allResults = [];
                 let results = [];
@@ -86,52 +140,6 @@ define(
                 } while (results.length >= size);
 
                 return allResults;
-            }
-
-            getCSV() {
-                const TITLE = `${MODULE}.GetCSV`;
-                let output = [];
-                let columns = this.me.columns;
-
-                let csvRow = [];
-                columns.forEach(col => {
-                    let label = kbs_string.normalize(col.label || col.name);
-                    csvRow.push(label);
-                });
-                log.debug({ title: `${TITLE} headerRow`, details: JSON.stringify(csvRow) });
-                output.push(csvRow.join(','));
-
-                this.getAll().forEach(row => {
-                    csvRow = [];
-                    columns.forEach(col => {
-                        csvRow.push(row.getValue(col));
-                    });
-                    log.debug({ title: `${TITLE} headerRow`, details: JSON.stringify(csvRow) });
-                    output.push(csvRow.join(','));
-                });
-
-                log.debug({ title: TITLE, details: `output length = ${output.length}` });
-                return output;
-            }
-
-            getJSON() {
-                const TITLE = `${MODULE}.GetJSON`;
-                let output = [];
-                let columns = this.me.columns;
-
-                this.getAll().forEach(row => {
-                    let jsonRow = {};
-                    columns.forEach(col => {
-                        let label = kbs_string.normalize(col.label || col.name);
-                        jsonRow[label] = row.getValue(col);
-                    });
-
-                    log.debug({ title: `${TITLE} jsonRow`, details: JSON.stringify(jsonRow) });
-                    output.push(jsonRow);
-                });
-
-                log.debug({ title: `${TITLE} output`, details: JSON.stringify(output) });
-                return output;
             }
         }
 
