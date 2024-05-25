@@ -45,6 +45,17 @@ define(
                 if (!name) { return ''; }
                 
                 return runtime.getCurrentScript().getParameter({ name });
+            },
+            getParameters: (fields) => {
+                if (!!fields === false) { return {}; }
+                if (fields.length <= 0) { return {}; }
+
+                let output = {};
+                fields.forEach(f => {
+                    output[f] = this.getParameter(f);
+                });
+
+                return output;
             }
         };
     }

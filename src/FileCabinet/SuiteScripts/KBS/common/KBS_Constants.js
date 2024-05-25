@@ -19,23 +19,98 @@ define(
     ) => {
         const ADVANCED_PDF_TEMPLATES = {};
         const CUSTOM_RECORDS = {};
-        const DEPLOYMENTS = {};
+        const DEPLOYMENTS = {
+            MR_HAS_ISSUES: ''
+        };
+        const ERRORS = {
+            MISSING_PARAMETER: `Missing required parameter: {name}.`
+        };
         const FORMS = {};
         const LISTS = {};
-        const SCRIPT_PARAMETERS = {};
-        const SCRIPTS = {};
+        const QUERIES = {
+            CURRENCIES: `SELECT
+                    Symbol,
+                    Name,
+                    ExchangeRate,
+                    DisplaySymbol,
+                    SymbolPlacement,
+                    CurrencyPrecision,
+                    IsBaseCurrency
+                FROM
+                    Currency
+                WHERE
+                    ( IsInactive = 'F' )
+                ORDER BY
+                    Symbol`,
+            CUSTOM_LIST_VALUES: `SELECT
+                    Name, 
+                    ID
+                FROM
+                    {CUSTOM_LIST_ID}
+                WHERE
+                    IsInactive = 'F'
+                ORDER BY
+                    Name`,
+            CUSTOM_LISTS: `SELECT
+                    Name,
+                    Description,
+                    ScriptID,
+                    BUILTIN.DF( Owner ) AS Owner,
+                    IsOrdered
+                FROM 
+                    CustomList
+                WHERE
+                    ( IsInactive = 'F' )
+                ORDER BY
+                    Name`,
+            STATE_COUNTRIES: `SELECT
+                    Country.ID AS CountryID,
+                    Country.Name AS CountryName,
+                    Country.Edition,
+                    Country.Nationality,
+                    State.ID AS StateID,
+                    State.ShortName AS StateShortName,
+                    State.FullName AS StateFullName
+                FROM
+                    Country
+                    LEFT OUTER JOIN State ON
+                        ( State.Country = Country.ID )
+                ORDER BY
+                    CountryName,
+                    StateShortName`,
+            TRANSACTIONS_ASSOCIATED_TO_SALES_ORDER: `SELECT
+                    id,
+                    type
+                FROM
+                    Transaction
+                WHERE
+                    custbody_associated_salesorder = {ID}`
+        };
+        const RECORD_TYPES = {
+            CustInvc: 'invoice',
+            PurchOrd: 'purchaseorder',
+            VendBill: 'vendorbill'
+        };
+        const SCRIPT_PARAMETERS = {
+            HAS_ISSUES_ASSOCIATED_SO: ''
+        };
+        const SCRIPTS = {
+            MR_HAS_ISSUES: ''
+        };
 
         return {
             AdvancedPDFTemplates: ADVANCED_PDF_TEMPLATES,
             CustomRecords: CUSTOM_RECORDS,
             Deployments: DEPLOYMENTS,
             Entity: KBS_Entity,
+            Errors: ERRORS,
             Forms: FORMS,
             Lists: LISTS,
+            Queries: QUERIES,
+            RecordTypes: RECORD_TYPES,
             ScriptParameters: SCRIPT_PARAMETERS,
             Scripts: SCRIPTS,
-            Transaction: KBS_Transaction,
-
+            Transaction: KBS_Transaction
         };
     }
 );

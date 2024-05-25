@@ -15,8 +15,12 @@
  */
 
 define(
-    [],
-    () => {
+    [
+        '../modules/KBS_Issues'
+    ],
+    (
+        KBS_Issues
+    ) => {
         const MODULE = `KBS|UE`;
 
         const beforeLoad = (context) => {
@@ -28,6 +32,10 @@ define(
         const beforeSubmit = (context) => {
             const TITLE = `${MODULE}.BeforeSubmit`;
             log.debug({ title: TITLE, details: `*** START ***` });
+
+            // NS WF | Has Issues Setting
+            KBS_Issues.run(context);
+            
             log.debug({ title: TITLE, details: `*** END ***` });
         };
 

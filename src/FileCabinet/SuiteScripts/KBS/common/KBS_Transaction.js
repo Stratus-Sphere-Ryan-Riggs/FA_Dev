@@ -233,6 +233,7 @@ define(
             PRODUCE_PASSING:                'custbody_produce_passing',
             PROJECT_CSEG:                   'custbody_project_cseg',
             
+            VENDOR_BILL_TYPE:               'custbody_vendor_bill_type'
         };
 
         const Sublists = {

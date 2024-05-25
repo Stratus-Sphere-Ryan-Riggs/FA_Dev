@@ -10,76 +10,22 @@
 
 define(
     [
-        'N/query'
+        'N/query',
+        './KBS_Constants'
     ],
     (
-        query
+        query,
+        constants
     ) => {
-        const CURRENCIES = `SELECT
-            Symbol,
-            Name,
-            ExchangeRate,
-            DisplaySymbol,
-            SymbolPlacement,
-            CurrencyPrecision,
-            IsBaseCurrency
-        FROM
-            Currency
-        WHERE
-            ( IsInactive = 'F' )
-        ORDER BY
-            Symbol`;
-        
-        const CUSTOM_LIST_VALUES = `
-        SELECT
-            Name, 
-            ID
-        FROM
-            {CUSTOM_LIST_ID}
-        WHERE
-            IsInactive = 'F'
-        ORDER BY
-            Name
-        `;
-
-        const CUSTOM_LISTS = `SELECT
-            Name,
-            Description,
-            ScriptID,
-            BUILTIN.DF( Owner ) AS Owner,
-            IsOrdered
-        FROM 
-            CustomList
-        WHERE
-            ( IsInactive = 'F' )
-        ORDER BY
-            Name`;
-
-        const STATE_COUNTRIES = `SELECT
-            Country.ID AS CountryID,
-            Country.Name AS CountryName,
-            Country.Edition,
-            Country.Nationality,
-            State.ID AS StateID,
-            State.ShortName AS StateShortName,
-            State.FullName AS StateFullName
-        FROM
-            Country
-            LEFT OUTER JOIN State ON
-                ( State.Country = Country.ID )
-        ORDER BY
-            CountryName,
-            StateShortName`;
-    
         return {
             get Currencies() {
-                return this.run(CURRENCIES);
+                return this.run(constants.Queries.CURRENCIES);
             },
             get CustomLists() {
-                return this.run(CUSTOM_LISTS);
+                return this.run(constants.Queries.CUSTOM_LISTS);
             },
             get StatesWithCountries() {
-                return this.run(STATE_COUNTRIES);
+                return this.run(constants.Queries.STATE_COUNTRIES);
             },
             
             getCustomListValues(id) {
