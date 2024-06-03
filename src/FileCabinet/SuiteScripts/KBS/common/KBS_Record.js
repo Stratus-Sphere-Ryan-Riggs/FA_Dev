@@ -98,26 +98,37 @@ define(
                         }
                         
                         let lineObject = { line };
-                        fields.forEach(fieldId => {
+                        for (const fieldId of Object.values(fields)) {
                             let params = { fieldId, sublistId, text };
                             if (this.me.isDynamic === false) {
                                 params.line = line;
                             }
 
                             lineObject[fieldId] = text === this.getValue(params);
-                            /* output[sublistId].push({
+                        }
+                        /* fields.forEach(fieldId => {
+                            let params = { fieldId, sublistId, text };
+                            if (this.me.isDynamic === false) {
+                                params.line = line;
+                            }
+
+                            lineObject[fieldId] = text === this.getValue(params);
+                            *** output[sublistId].push({
                                 line,
                                 fieldId,
                                 value: text === this.getValue(params)
-                            }); */
-                        });
+                            }); ***
+                        }); */
                         output[sublistId].push(lineObject);
                     }
                 }
                 else {
-                    fields.forEach(fieldId => {
+                    for (const fieldId of Object.values(fields)) {
                         output[fieldId] = this.getValue({ fieldId })
-                    });
+                    }
+                    /* fields.forEach(fieldId => {
+                        output[fieldId] = this.getValue({ fieldId })
+                    }); */
                 }
 
                 log.debug({ title: TITLE, details: JSON.stringify(options) });

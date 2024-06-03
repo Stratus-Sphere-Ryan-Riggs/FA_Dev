@@ -38,7 +38,7 @@ define(
             newRecord = RECORD.cast(newRecord);
 
             // let oldValues = oldRecord.getValues({ fields: FIELDS });
-            let newValues = oldRecord.getValues({ fields: FIELDS });
+            let newValues = newRecord.getValues({ fields: FIELDS });
 
             let salesOrderId = newRecord.ASSOCIATED_MASTER_SO || newRecord.id;
             // TODO: Verify custbody_sw_abm_vendor_invoice_doc

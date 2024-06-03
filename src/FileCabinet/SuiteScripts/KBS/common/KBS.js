@@ -12,6 +12,7 @@ define(
     [
         './KBS_Constants',
         './KBS_Dialog',
+        './KBS_Email',
         './KBS_Entity',
         './KBS_File',
         './KBS_Form',
@@ -28,6 +29,7 @@ define(
     (
         KBS_Constants,
         KBS_Dialog,
+        KBS_Email,
         KBS_Entity,
         KBS_File,
         KBS_Form,
@@ -44,6 +46,7 @@ define(
         return {
             Constants: KBS_Constants,
             Dialog: KBS_Dialog,
+            Email: KBS_Email,
             Entity: KBS_Entity,
             File: KBS_File,
             Form: KBS_Form,

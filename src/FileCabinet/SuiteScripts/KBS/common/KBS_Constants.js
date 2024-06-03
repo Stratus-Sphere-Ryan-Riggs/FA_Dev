@@ -26,7 +26,22 @@ define(
             MISSING_PARAMETER: `Missing required parameter: {name}.`
         };
         const FORMS = {};
-        const LISTS = {};
+        const LISTS = {
+            ORDER_TYPE: {
+                Id: 'customlist_order_type',
+                Values: {
+                    DISASTER: '9',
+                    DONATION_BLUE: '6',
+                    DONATION_MAROON: '5',
+                    DONATION_YELLOW: '3',
+                    GROCERY: '1',
+                    OTHER: '4',
+                    PRODUCE: '1',
+                    SEAFOOD: '8',
+                    TRANSPORTATION: '7'
+                }
+            }
+        };
         const QUERIES = {
             CURRENCIES: `SELECT
                     Symbol,
