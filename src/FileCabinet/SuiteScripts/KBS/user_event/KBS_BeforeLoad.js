@@ -10,8 +10,23 @@
  */
 
 define(
-    [],
-    () => {
-        const MODULE = `KBS`
+    [
+        '../modules/KBS_AddInvoiceHeaderButton'
+    ],
+    (
+        KBS_AddInvoiceHeaderButton
+    ) => {
+        const MODULE = `KBS.BeforeLoad`;
+
+        const run = (options) => {
+
+            // TODO: NS | UE | SET MEMBERS ON THE SALES ORDER
+            KBS_AddInvoiceHeaderButton(options);
+            
+            // TODO: KBS Sales Order UE
+
+        };
+
+        return { run };
     }
 );

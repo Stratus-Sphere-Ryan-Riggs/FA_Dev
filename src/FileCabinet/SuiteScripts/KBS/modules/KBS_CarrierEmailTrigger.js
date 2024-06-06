@@ -32,7 +32,26 @@ define(
             let oldValues = oldCast.getValues({ fields: FIELDS });
             if (validateEmail({ values: oldValues }) === false) { return; }
 
-            return KBS.Email.send({ })
+            sendEmail();
+        };
+
+        const sendEmail = (options) => {
+            const TITLE = `${MODULE}.SendEmail`;
+
+            try {
+                let emailTemplate = KBS.Render.mergeEmail({
+                    templateId: ''
+                });
+                KBS.Email.send({
+                    author: '',
+                    recipients: '',
+                    subject: emailTemplate.subject,
+                    body: emailTemplate.body
+                });
+            }
+            catch (ex) {
+                log.error({ title: TITLE, details: ex.toString() });
+            }
         };
 
         const validate = (options) => {
@@ -42,7 +61,10 @@ define(
             let orderType = values.ORDER_TYPE;
             let faTransportArranged = values.FA_TRANSPORT_ARRANGED;
             let carrierCode = values.CARRIER_CODE;
-            log.debug({ title: TITLE, details: `orderType = ${orderType}; faTransportArranged = ${faTransportArranged}; carrierCode = ${carrierCode}` });
+            log.debug({
+                title: TITLE,
+                details: `orderType = ${orderType}; faTransportArranged = ${faTransportArranged}; carrierCode = ${carrierCode}`
+            });
  
             return (
                 orderType !== CUSTOM_LISTS.ORDER_TYPE.Values.DONATION_BLUE &&

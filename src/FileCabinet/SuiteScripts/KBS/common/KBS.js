@@ -24,6 +24,7 @@ define(
         './KBS_String',
         './KBS_Task',
         './KBS_Transaction',
+        './KBS_Url',
         './KBS_User'
     ],
     (
@@ -41,6 +42,7 @@ define(
         KBS_String,
         KBS_Task,
         KBS_Transaction,
+        KBS_Url,
         KBS_User
 ) => {
         return {
@@ -58,6 +60,7 @@ define(
             String: KBS_String,
             Task: KBS_Task,
             Transaction: KBS_Transaction,
+            Url: KBS_Url,
             User: KBS_User
         };
     }

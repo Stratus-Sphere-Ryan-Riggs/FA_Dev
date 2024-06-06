@@ -16,10 +16,14 @@
 
 define(
     [
-        '../modules/KBS_Issues'
+        './KBS_BeforeLoad',
+        './KBS_BeforeSubmit',
+        './KBS_AfterSubmit'
     ],
     (
-        KBS_Issues
+        KBS_BeforeLoad,
+        KBS_BeforeSubmit,
+        KBS_AfterSubmit
     ) => {
         const MODULE = `KBS|UE`;
 
@@ -27,9 +31,8 @@ define(
             const TITLE = `${MODULE}.BeforeLoad`;
             log.debug({ title: TITLE, details: `*** START ***` });
 
-            // TODO: NS | UE | SET MEMBERS ON THE SALES ORDER
-            // TODO: KBS Sales Order UE
-            
+            KBS_BeforeLoad.run(context);
+
             log.debug({ title: TITLE, details: `*** END ***` });
         };
 
@@ -37,13 +40,7 @@ define(
             const TITLE = `${MODULE}.BeforeSubmit`;
             log.debug({ title: TITLE, details: `*** START ***` });
 
-            // TODO: NS UE | Set Auction Time
-
-            // NS WF | Has Issues Setting
-            KBS_Issues.run(context);
-            
-            // TODO: NS | Update Transport Purchase Order
-            // TODO: KBS Sales Order UE
+            KBS_BeforeSubmit.run();
 
             log.debug({ title: TITLE, details: `*** END ***` });
         };
@@ -52,16 +49,30 @@ define(
             const TITLE = `${MODULE}.AfterSubmit`;
             log.debug({ title: TITLE, details: `*** START ***` });
 
-            // TODO: NS UE | Set Auction Time
-            // TODO: NS UE | Add Transport Fees
-            // TODO: NS | Script Create Transport PO from SO
-            // TODO: NS WF | Has Issues Setting
-            // TODO: NS| UE | CALCULATE MILEAGE
-            // TODO: NS | Update Transport Purchase Order
-            // TODO: KBS Sales Order UE
-            // TODO: KBS Set Sales Order Flat Promos UE
-            // TODO: UE | Seafood Item Update
-            // TODO: Email Campaign Sales Order User Event
+            KBS_AfterSubmit.run();
+            
+            // TODO: Workflows
+            // TODO: Carrier email trigger
+            // TODO: Donation order status update
+            // TODO: FA WF|Disallow edit of Closed orders
+            // TODO: Incoming member comments alert
+            // TODO: FA | SO Check NO TMS
+            // TODO: FA | SO Check Transportation Svc & CHEP
+            // TODO: FA | Sales Order Bill To Freight
+            // TODO: FA | Send TMS File Alert Email
+            // TODO: NS Sales Order Balances
+            // TODO: NS WF | Accept Sales Order
+            // TODO: NS WF | Check for Product Hold
+            // TODO: NS WF | Check Has Issues
+            // TODO: NS WF | Disaster SO Set Est Freight
+            // TODO: NS WF | Donation Sales Orders
+            // TODO: NS WF | Inactive Vendor/Customer Block
+            // TODO: NS WF | Sales Order Approval Checkbox
+            // TODO: NS WF | Sales Order Set TMS Comments
+            // TODO: NS Workflow | Supply Chain Management
+            // TODO: Original_ReleaseDat_On_SalesOrder
+            // TODO: PO Admin Sales Order Edit
+            // TODO: Sales Order Cancel
 
             log.debug({ title: TITLE, details: `*** END ***` });
         };

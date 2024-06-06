@@ -18,9 +18,25 @@ define(
         KBS_Transaction
     ) => {
         const ADVANCED_PDF_TEMPLATES = {};
-        const CUSTOM_RECORDS = {};
+        const BUTTONS = {
+            INVOICE_HEADER_MEMBER: {
+                id: 'custpage_btn_invoice_member',
+                label: 'Invoice Header Member',
+                functionName: 'invoiceHeaderMember'
+            }
+        };
+        const CUSTOM_RECORDS = {
+            CARRIER: {
+                Id: 'customrecord_carrier',
+                Fields: {
+                    CARRIER_EMAIL: 'custrecord_carrier_email'
+                }
+            }
+        };
         const DEPLOYMENTS = {
-            MR_HAS_ISSUES: ''
+            MR_HAS_ISSUES: '',
+
+            SL_SUIT_MEMBERS_ON_SO: 'customdeploy_suit_members_sales_order'
         };
         const ERRORS = {
             MISSING_PARAMETER: `Missing required parameter: {name}.`
@@ -110,7 +126,9 @@ define(
             HAS_ISSUES_ASSOCIATED_SO: ''
         };
         const SCRIPTS = {
-            MR_HAS_ISSUES: ''
+            MR_HAS_ISSUES: '',
+
+            SL_SUIT_MEMBERS_ON_SO: 'customscript_suit_members_sales_order'
         };
 
         return {
