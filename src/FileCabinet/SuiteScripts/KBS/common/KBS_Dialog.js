@@ -19,6 +19,7 @@ define(
 
         return {
             alert: (options) => {
+                let { title, message } = options;
                 // TODO: Implement using nlCallWindow or new RedWood UI
             },
             confirm: (options) => {
