@@ -10,6 +10,7 @@
 
 define(
     [
+        './KBS_ClientHandlers',
         './KBS_Constants',
         './KBS_Dialog',
         './KBS_Email',
@@ -28,6 +29,7 @@ define(
         './KBS_User'
     ],
     (
+        KBS_ClientHandlers,
         KBS_Constants,
         KBS_Dialog,
         KBS_Email,
@@ -46,6 +48,7 @@ define(
         KBS_User
 ) => {
         return {
+            ClientHandlers: KBS_ClientHandlers,
             Constants: KBS_Constants,
             Dialog: KBS_Dialog,
             Email: KBS_Email,

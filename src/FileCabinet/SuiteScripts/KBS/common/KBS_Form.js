@@ -17,28 +17,43 @@ define(
     ) => {
         const MODULE = `KBS.Form`;
 
+        class Field {
+            constructor (field) {
+                this.field = field;
+            }
+
+
+        }
+
         class Form {
-            constructor () {
+            constructor (form) {
+                this.form = form;
             }
 
             get Fields() {
-                return this.fields;
+                return this.form.getFields();
             }
 
             addButton (options) {
                 let { disabled, id, label, submit } = options;
 
                 if (submit) {
-                    let button = this.me.addSubmitButton(options);
-                    this.buttons.push(button);
+                    let button = this.form.addSubmitButton(options);
                 }
                 else {
-                    this.me.addButton(options);
+                    let functionName = `${id}_handler`;
+                    this.form.addButton({ id, label, functionName });
 
-                    let button = this.me.getButton({ id });
-                    this.buttons.push(button);
-                    if (disabled === true) {
-                        button.isDisabled = true;
+                    let button = this.form.getButton({ id });
+                    button.isDisabled = !!disabled;
+
+                    if (handler) {
+                        let handlerField = this.form.addField({
+                            id: `${id}_handler`,
+                            label: `${label} Handler`,
+                            type: sw.FieldType.INLINEHTML
+                        });
+                        handlerField.defaultValue = handler.replace('{NAME}', functionName);
                     }
                 }
             }
@@ -56,10 +71,10 @@ define(
                 } = options;
 
                 if (!type) {
-                    type = NS_ServerWidget.FieldType.TEXT;
+                    type = sw.FieldType.TEXT;
                 }
     
-                let field = this.me.addField(options);
+                let field = this.form.addField(options);
                 this.fields.push(field);
 
                 if (items) {
@@ -94,43 +109,44 @@ define(
     
                 return options.parent;
             }
+
+            addFields (fields) {
+                fields.forEach(field => this.addField(field));
+            }
             
             addFieldGroup (options) {
                 let { fields, id, label } = options;
 
-                let fieldGroup = this.me.addFieldGroup(options);
-                this.groups.push(fieldGroup);
-
+                this.form.addFieldGroup(options);
                 if (fields) {
-                    for (let i = 0, length = fields.length; i < length; i++) {
-                        this.addField({
-                            ...fields[i],
-                            container: id
-                        });
-                    }
+                    this.addFields(
+                        fields.map(fld => {
+                            return {
+                                ...fld,
+                                container: id
+                            };
+                        })
+                    );
                 }
             }
 
             addSublist (options) {
                 let { fields, id, label, selectItems, type } = options;
-                let sublist = this.me.addSublist({ id, label, type });
-                this.sublists.push(sublist);
+                let sublist = this.form.addSublist({ id, label, type });
     
                 if (selectItems) {
                     sublist.addMarkAllButtons();
                     sublist.addField({
-                        id: 'custpage_data_select',
+                        id: `${id}_select`,
                         label: 'select',
-                        type: NS_ServerWidget.FieldType.CHECKBOX
+                        type: sw.FieldType.CHECKBOX
                     });
                 }
-    
-                for (let i = 0, fieldCount = fields.length; i < fieldCount; i++) {
-                    sublist.addField(fields[i]);
-                }
+
+                fields.forEach(field => sublist.addField(field));
             }
 
-            create (options) {
+            /* create (options) {
                 let { buttons, fieldGroups, fields, sublists } = options;
 
                 this.me = sw.createForm({ title: options.title });
@@ -156,12 +172,18 @@ define(
                 }
 
                 return this.me;
-            }
+            } */
         }
 
         return {
+            cast: (form) => {
+                return new Form(form);
+            },
             create: (options) => {
-                return (new Form()).create(options);
+                let { title } = options;
+                return this.cast(
+                    new Form( sw.createForm({ title }) )
+                );
             }
         }
     }

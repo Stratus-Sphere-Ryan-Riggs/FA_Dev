@@ -23,10 +23,17 @@ define(
 
             if (validate(options) === false) { return; }
 
-            addButton(options);
+            log.debug({ title: TITLE, details: `Adding invoice header button...` });
+            let form = KBS.Form.cast(options.form);
+            form.addButton({
+                ...KBS.Constants.Buttons.INVOICE_HEADER_MEMBER,
+                handler: KBS.ClientHandlers.invoiceHeaderButton()
+            });
+
+            // addButton(options);
         };
 
-        const addButton = (options) => {
+        /* const addButton = (options) => {
             const TITLE = `${MODULE}.AddButton`;
             let { form, newRecord } = options;
 
@@ -39,11 +46,11 @@ define(
             });
 
             // TODO: Add Inline HTML field for button event handler
-
             form.addButton(KBS.Constants.Buttons.INVOICE_HEADER_MEMBER);
-        };
+        }; */
 
         const validate = (options) => {
+            const TITLE = `${MODULE}.Validate`;
             let { type } = options;
 
             if (
@@ -57,6 +64,7 @@ define(
                 return false;
             }
 
+            log.debug({ title: TITLE, details: 'Valid' });
             return true;
         };
 

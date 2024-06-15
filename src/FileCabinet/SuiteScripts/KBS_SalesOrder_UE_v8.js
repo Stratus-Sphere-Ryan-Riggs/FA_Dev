@@ -813,6 +813,9 @@ define(
             var entityField;
 
             if (type === context.UserEventType.COPY || type === context.UserEventType.CREATE) {
+                if (type === context.UserEventType.COPY) {
+                    rec.setValue({ fieldId: 'custbody_ready_for_approval', value: false });
+                }
                 kbsApplyPromo.deleteLines(rec);
             }
             // if (!((status === 'Pending Fulfillment' || status === 'Pending Approval') && type === 'edit' && userObj.role === 3) {
@@ -914,10 +917,6 @@ define(
                     return true;
                 });
             }
-            log.audit('status', status);
-            log.audit('allowStatusOverride', allowStatusOverride);
-            log.audit('amt', amt + ' ' + typeof amt);
-            log.audit('amtUnbilled', amtUnbilled + ' ' + typeof amtUnbilled);
 
             if ((orderType === '1' || orderType === '2' || orderType === '3' || orderType === '5' || orderType === '8') && shippingMethodCode) {
                 log.audit('orderType', orderType + ' ' + typeof orderType);
@@ -928,6 +927,7 @@ define(
             }
             log.debug('amount', amt);
             log.debug('amount unbilled', amtUnbilled);
+
             if ((status === 'Closed' || status === 'Cancelled') && orderStatus === '3') { // Cancelled - Id: 3
                 kbsApplyPromo.deleteLines(rec);
             } else if (status !== 'Billed' && status !== 'Closed' && status !== 'Partially Fulfilled'
@@ -992,9 +992,6 @@ define(
                     }
                 }
             }
-
-
-            orderType = rec.getValue('custbody_order_type');
 
             // only run if order type is not Transportation (id = 7)
             if (type === context.UserEventType.EDIT && orderType !== '7') {
@@ -1111,6 +1108,11 @@ define(
             var y;
             var itemCount;
             var freightSubsidyRecId = rec.getValue('custbody_kbs_tfs');
+            var orderHasIssues;
+            var orderHasIssuesReason;
+            var orderStatus;
+            var status;
+            var orderType;
 
             log.debug('in afterSubmit');
             if (freightSubsidyRecId) {
@@ -1118,6 +1120,36 @@ define(
                 kbsApplyPromo.updateFreightSubsidy(freightSubsidyRecId, rec, type);
             }
             if (type !== context.UserEventType.DELETE && type !== context.UserEventType.XEDIT) {
+                if (type === context.UserEventType.CREATE || type === context.UserEventType.COPY) {
+                    // Order Status Accepted = 2,  On Hold For Finance = 9
+                    // if ((orderType === '1' || orderType === '2') && (orderStatus === '2' || orderStatus === '4')) {
+                    orderStatus = rec.getValue({ fieldId: 'custbody_order_status' });
+                    // status = rec.getValue('status');
+                    orderType = rec.getValue('custbody_order_type');
+                    log.audit('orderType for approval', orderType + ' ' + typeof orderType);
+                    log.audit('orderStatus for approval', orderStatus + ' ' + typeof orderStatus);
+                    // log.audit('status for approval', status + ' ' + typeof status);
+                    if ((orderType === '1' || orderType === '2') && (orderStatus === '2' || orderStatus === '9')) {
+                        orderHasIssues = rec.getValue('custbody_order_has_issues');
+                        orderHasIssuesReason = rec.getValue('custbody_order_has_issues_reason');
+                        log.audit('orderHasIssues', orderHasIssues + ' ' + typeof orderHasIssues);
+                        log.audit('orderHasIssuesReason', orderHasIssuesReason + ' ' + typeof orderHasIssuesReason);
+                        log.audit('orderHasIssuesReason length', orderHasIssuesReason.length);
+                        if (!orderHasIssues && (!orderHasIssuesReason || orderHasIssuesReason.length === 0)) {
+                            // objRecord = nsRecord.load({ type: nsRecord.Type.SALES_ORDER, id: context.newRecord.id, isDynamic: false });
+                            log.audit('setting custbody_ready_for_approval to true');
+                            // rec.setValue({ fieldId: 'custbody_ready_for_approval', value: true });
+                            nsRecord.submitFields({
+                                type: nsRecord.Type.SALES_ORDER,
+                                id: rec.id,
+                                values: {
+                                    custbody_ready_for_approval: true
+                                }
+                            });
+                            // objRecord.save({ enableSourcing: true, ignoreMandatoryFields: true });
+                        }
+                    }
+                }
                 objRecord = nsRecord.load({ type: nsRecord.Type.SALES_ORDER, id: context.newRecord.id, isDynamic: false });
                 promoCount = objRecord.getLineCount({
                     sublistId: 'promotions'
@@ -1173,9 +1205,9 @@ define(
                         calculateDeliveredPrice(rec, transFeeRate, objRecord);
 
                         // Added for ticket #12756
-                      if(type === context.UserEventType.CREATE) {
-                        setDonationBillToMember(objRecord, itemCount);
-                      }
+                        if (type === context.UserEventType.CREATE) {
+                            setDonationBillToMember(objRecord, itemCount);
+                        }
                     }
                 } catch (ex) {
                     log.error('Error', ex);
